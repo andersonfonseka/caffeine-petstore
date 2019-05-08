@@ -17,7 +17,14 @@ public class AcessoRepositorio {
 	
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
-	public AcessoRepositorio() {}{}
+	public AcessoRepositorio() {}{
+		
+		Usuario usuario = new Usuario();
+		usuario.setEmail("admin@admin.com");
+		usuario.setSenha("123");
+		this.usuarios.add(usuario);
+		
+	}
 	
 	public void adicionar(Usuario usuario) {
 		usuario.setId(contador);

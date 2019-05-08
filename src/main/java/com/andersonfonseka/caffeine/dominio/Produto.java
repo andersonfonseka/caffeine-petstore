@@ -4,9 +4,13 @@ public class Produto {
 	
 	private Integer id;
 	
-	private String descricao;
+	private String descricao = "";
+	
+	private String observacoes = "";
 	
 	private double valor;
+	
+	private String imagem = "";
 	
 	private Categoria categoria;
 	
@@ -40,6 +44,22 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 	
 }

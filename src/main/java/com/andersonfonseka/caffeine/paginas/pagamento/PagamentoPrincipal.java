@@ -11,13 +11,14 @@ import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.ITabela;
+import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
-import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
+import com.andersonfonseka.caffeine.paginas.PetstorePagina;
 import com.andersonfonseka.caffeine.paginas.acesso.AcessoPrincipal;
 import com.andersonfonseka.caffeine.repositorio.ClienteRepositorio;
 
 @RequestScoped
-public class PagamentoPrincipal extends Pagina {
+public class PagamentoPrincipal extends PetstorePagina {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +33,8 @@ public class PagamentoPrincipal extends Pagina {
 	@PostConstruct
 	public void post() {
 
+		super.post();
+		
 		setTitulo("Pagamentos");
 
 		form = getComponenteFabrica().criarFormulario();
@@ -71,11 +74,10 @@ public class PagamentoPrincipal extends Pagina {
 			adicionar(0, tabela);
 		
 		IConteiner conteinerBotoes = getComponenteFabrica().criarConteiner(1);
-		conteinerBotoes.setOrientacao(IConteiner.HORIZONTAL);
+		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
 		
 		conteinerBotoes.adicionar(0, btnNovo).
-						adicionar(0, btnEditar).
-						adicionar(0, getComponenteFabrica().criarBotaoCancelar(AcessoPrincipal.class));
+						adicionar(0, btnEditar);
 		
 		form.adicionar(conteiner);
 		form.adicionar(conteinerBotoes);

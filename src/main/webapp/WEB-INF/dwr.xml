@@ -1,0 +1,6 @@
+<dwr>
+	<allow>
+		<create creator="new" javascript="UploadDownload" class="com.andersonfonseka.caffeine.servlet.UploadDownload" />
+	</allow>
+	<convert match="java.lang.Exception" converter="exception"/>
+</dwr>

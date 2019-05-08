@@ -6,6 +6,7 @@ import javax.enterprise.context.SessionScoped;
 
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Projeto;
 import com.andersonfonseka.caffeine.paginas.acesso.AcessoPrincipal;
+import com.andersonfonseka.caffeine.paginas.categoria.CategoriaPrincipal;
 
 @SessionScoped
 public class PetstoreProjeto extends Projeto {
@@ -14,6 +15,7 @@ public class PetstoreProjeto extends Projeto {
 
 	public PetstoreProjeto() {
 		setTitulo("Caffeine Petstore");
+		//setPaginaInicial(CategoriaPrincipal.class);
 		setPaginaInicial(AcessoPrincipal.class);
 	}
 

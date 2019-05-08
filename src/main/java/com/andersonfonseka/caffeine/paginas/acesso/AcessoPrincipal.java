@@ -9,9 +9,13 @@ import javax.inject.Inject;
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IFormulario;
+import com.andersonfonseka.caffeine.IMenu;
 import com.andersonfonseka.caffeine.IResposta;
+import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
+import com.andersonfonseka.caffeine.paginas.PetstorePrincipal;
+import com.andersonfonseka.caffeine.paginas.categoria.CategoriaFormulario;
 import com.andersonfonseka.caffeine.paginas.categoria.CategoriaPrincipal;
 import com.andersonfonseka.caffeine.repositorio.AcessoRepositorio;
 
@@ -31,17 +35,16 @@ public class AcessoPrincipal extends Pagina {
 
 	@PostConstruct
 	public void post() {
-
+		
 		setTitulo("Acesso");
 		
 		Map<String, String> map = acessoRepositorio.getMapaUsuarios();
 		
 		formulario = getComponenteFabrica().criarFormulario();
-		formulario.adicionar(getComponenteFabrica().criarAcesso(this, map, CategoriaPrincipal.class));
-
+		formulario.adicionar(getComponenteFabrica().criarAcesso(this, map, PetstorePrincipal.class));
 		
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
-		conteinerBotoes.setOrientacao(IConteiner.HORIZONTAL);
+		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
 
 		criarBotaoNovoAcesso();
 

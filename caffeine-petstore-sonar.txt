@@ -1,0 +1,5 @@
+mvn sonar:sonar \
+  -Dsonar.projectKey=andersonfonseka_caffeine-petstore \
+  -Dsonar.organization=andersonfonseka-github \
+  -Dsonar.host.url=https://sonarcloud.io \
+  -Dsonar.login=8b5b741733ff9816bc1b6194223c5819ea1587d9

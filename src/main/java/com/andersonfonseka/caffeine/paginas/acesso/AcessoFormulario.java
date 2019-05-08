@@ -12,6 +12,7 @@ import com.andersonfonseka.caffeine.IEntradaEmail;
 import com.andersonfonseka.caffeine.IEntradaSenha;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
+import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
 import com.andersonfonseka.caffeine.dominio.Usuario;
@@ -43,14 +44,15 @@ public class AcessoFormulario extends Pagina {
 	@PostConstruct
 	public void post() {
 
-		setTitulo("Acesso - Cadastro");
+		setTitulo("Acesso");
+		setSubTitulo("Cadastro");
 
 		formulario = getComponenteFabrica().criarFormulario();
 
 		conteiner = getComponenteFabrica().criarConteiner(3);
 
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
-		conteinerBotoes.setOrientacao(IConteiner.HORIZONTAL);
+		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
 
 		criarComponentesBasicos();
 		criarBotaoAplicar();

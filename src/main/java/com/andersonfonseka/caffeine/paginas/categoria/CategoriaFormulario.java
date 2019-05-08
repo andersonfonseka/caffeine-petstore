@@ -11,6 +11,7 @@ import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IEntradaTexto;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
+import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
 import com.andersonfonseka.caffeine.dominio.Categoria;
@@ -35,14 +36,15 @@ public class CategoriaFormulario extends Pagina {
 	@PostConstruct
 	public void post() {
 
-		setTitulo("Categoria");
+		setTitulo("Categorias");
+		setSubTitulo("Cadastro");
 
 		form = getComponenteFabrica().criarFormulario();
 
 		conteiner = getComponenteFabrica().criarConteiner(3);
 
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
-		conteinerBotoes.setOrientacao(IConteiner.HORIZONTAL);
+		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
 
 		criarComponentesBasicos();
 		criarBotaoAplicar();
@@ -63,7 +65,6 @@ public class CategoriaFormulario extends Pagina {
 
 				Categoria categoria = new Categoria();
 				categoria.setDescricao(txtDescricao.getValor());
-
 
 				categoriaRepositorio.adicionar(categoria);
 

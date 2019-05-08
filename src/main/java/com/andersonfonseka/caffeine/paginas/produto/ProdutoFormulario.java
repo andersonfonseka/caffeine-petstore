@@ -8,13 +8,20 @@ import javax.inject.Inject;
 
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.IConteiner;
+import com.andersonfonseka.caffeine.IEntradaAreaTexto;
+import com.andersonfonseka.caffeine.IEntradaArquivo;
 import com.andersonfonseka.caffeine.IEntradaTexto;
 import com.andersonfonseka.caffeine.IFormulario;
+import com.andersonfonseka.caffeine.IOpcaoSelecao;
 import com.andersonfonseka.caffeine.IResposta;
+import com.andersonfonseka.caffeine.ISelecao;
+import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
 import com.andersonfonseka.caffeine.dominio.Categoria;
+import com.andersonfonseka.caffeine.dominio.Produto;
 import com.andersonfonseka.caffeine.repositorio.CategoriaRepositorio;
+import com.andersonfonseka.caffeine.repositorio.ProdutoRepositorio;
 
 @RequestScoped
 public class ProdutoFormulario extends Pagina {
@@ -24,33 +31,44 @@ public class ProdutoFormulario extends Pagina {
 	@Inject
 	private CategoriaRepositorio categoriaRepositorio;
 
+	@Inject
+	private ProdutoRepositorio produtoRepositorio;
+	
 	IFormulario form;
 
 	IConteiner conteiner;
 	
 	IConteiner conteinerBotoes;
 	
+	ISelecao selCategorias;
+	
 	IEntradaTexto txtDescricao;
+	
+	IEntradaAreaTexto txtObservacoes;
+	
+	IEntradaArquivo imgAnimal;
 
 	@PostConstruct
 	public void post() {
 
-		setTitulo("Categoria");
+		setTitulo("Produto");
+		setSubTitulo("Cadastro");
 
 		form = getComponenteFabrica().criarFormulario();
 
-		conteiner = getComponenteFabrica().criarConteiner(3);
-
+		conteiner = getComponenteFabrica().criarConteiner(4);
+		
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
-		conteinerBotoes.setOrientacao(IConteiner.HORIZONTAL);
-
+		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
+		
 		criarComponentesBasicos();
 		criarBotaoAplicar();
 		
 		form.adicionar(conteiner);
 		form.adicionar(conteinerBotoes);
-
+		
 		adicionar(form);
+
 	}
 
 	private void criarBotaoAplicar() {
@@ -61,11 +79,19 @@ public class ProdutoFormulario extends Pagina {
 				IResposta pageResponse = getComponenteFabrica().criarResposta();
 				pageResponse.setPageUrl(ProdutoFormulario.class);
 
+				Produto produto = new Produto();
+
+				IOpcaoSelecao opcaoSelecao = selCategorias.getSelecionado();
 				Categoria categoria = new Categoria();
-				categoria.setDescricao(txtDescricao.getValor());
+				categoria.setId(Integer.valueOf(opcaoSelecao.getValor()));
+				categoria.setDescricao(opcaoSelecao.getRotulo());
+				
+				produto.setCategoria(categoria);
+				produto.setDescricao(txtDescricao.getValor());
+				produto.setObservacoes(txtObservacoes.getValor());
+				produto.setImagem(imgAnimal.getEntradaOculta().getValor());
 
-
-				categoriaRepositorio.adicionar(categoria);
+				produtoRepositorio.adicionar(produto);
 
 				pageResponse.setPageUrl(ProdutoPrincipal.class);
 
@@ -80,8 +106,22 @@ public class ProdutoFormulario extends Pagina {
 	}
 	
 	private void criarComponentesBasicos() {
+		
+		selCategorias = getComponenteFabrica().criarSelecao("Categorias", true);
+		
+		for(Categoria categoria: categoriaRepositorio.getCategorias()) {
+			selCategorias.adicionar(getComponenteFabrica().criarOpcaoSelecao(categoria.getId().toString(), categoria.getDescricao()));	
+		}
+		
 		txtDescricao = getComponenteFabrica().criarEntradaTexto("Descricao", true);
-		conteiner.adicionar(0, txtDescricao);
+		txtObservacoes = getComponenteFabrica().criarEntradaAreaTexto("Observacoes", true, 5);
+		imgAnimal = getComponenteFabrica().criarEntradaArquivo("Imagem do animal", false);
+		
+		conteiner.adicionar(0, selCategorias);
+		conteiner.adicionar(1, txtDescricao);
+		conteiner.adicionar(2, txtDescricao);
+		conteiner.adicionar(3, imgAnimal);
+
 	}
 	
 
