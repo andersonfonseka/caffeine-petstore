@@ -119,7 +119,7 @@ public class ProdutoFormulario extends Pagina {
 		
 		conteiner.adicionar(0, selCategorias);
 		conteiner.adicionar(1, txtDescricao);
-		conteiner.adicionar(2, txtDescricao);
+		conteiner.adicionar(2, txtObservacoes);
 		conteiner.adicionar(3, imgAnimal);
 
 	}
