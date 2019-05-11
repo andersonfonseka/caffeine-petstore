@@ -10,6 +10,7 @@ import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.dominio.Produto;
+import com.andersonfonseka.caffeine.repositorio.CarrinhoRepositorio;
 import com.andersonfonseka.caffeine.repositorio.ProdutoRepositorio;
 
 public class PetstorePrincipal extends PetstorePagina {
@@ -18,6 +19,9 @@ public class PetstorePrincipal extends PetstorePagina {
 
 	@Inject
 	ProdutoRepositorio produtoRepositorio;
+
+	@Inject
+	CarrinhoRepositorio carrinhoRepositorio;
 
 	IFormulario formulario;
 
@@ -32,17 +36,31 @@ public class PetstorePrincipal extends PetstorePagina {
 		formulario = getComponenteFabrica().criarFormulario();
 		conteiner = getComponenteFabrica().criarConteiner(1);
 
-		IBotao botao = getComponenteFabrica().criarBotao("Adicionar ao carrinho", new AcaoAbs(this) {
-			@Override
-			public IResposta execute() {
-				return null;
-			}
-		}, true);
-
 		for (Produto prod : produtoRepositorio.getProdutos()) {
 
-			ICard card = getComponenteFabrica().criarCard(prod.getImagem(), prod.getDescricao(), prod.getObservacoes(),
-					botao);
+			ICard card = getComponenteFabrica().criarCard(prod.getImagem(), prod.getDescricao(), prod.getObservacoes());
+
+			IBotao botao = getComponenteFabrica().criarBotao("Adicionar ao carrinho", new AcaoAbs(card) {
+				@Override
+				public IResposta execute() {
+
+					ICard cardBotao = (ICard) getSource();
+
+					Produto produto = new Produto();
+					produto.setDescricao(cardBotao.getTitulo());
+					produto.setObservacoes(cardBotao.getTexto());
+
+					carrinhoRepositorio.adicionar(produto);
+
+					IResposta resposta = getComponenteFabrica().criarResposta();
+					resposta.setPageUrl(PetstorePrincipal.class);
+
+					return resposta;
+				}
+			}, true);
+			
+			card.setBotao(botao);
+
 			conteiner.adicionar(0, card);
 
 		}

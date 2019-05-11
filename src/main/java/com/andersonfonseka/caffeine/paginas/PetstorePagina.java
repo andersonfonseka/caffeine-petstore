@@ -5,7 +5,7 @@ import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
 import com.andersonfonseka.caffeine.paginas.categoria.CategoriaPrincipal;
-import com.andersonfonseka.caffeine.paginas.pagamento.PagamentoPrincipal;
+import com.andersonfonseka.caffeine.paginas.compra.CarrinhoPrinicipal;
 import com.andersonfonseka.caffeine.paginas.produto.ProdutoPrincipal;
 
 public class PetstorePagina extends Pagina {
@@ -35,15 +35,6 @@ public class PetstorePagina extends Pagina {
 			}
 		}));
 		
-		menu.adicionar(getComponenteFabrica().criarMenuItem("Pagamentos", new AcaoAbs(this) {
-			public IResposta execute() {
-				IResposta pageResponse = getComponenteFabrica().criarResposta();
-				pageResponse.setPageUrl(PagamentoPrincipal.class);
-
-				return pageResponse;
-			}
-		}));
-		
 		menu.adicionar(getComponenteFabrica().criarMenuItem("Produtos", new AcaoAbs(this) {
 			public IResposta execute() {
 				IResposta pageResponse = getComponenteFabrica().criarResposta();
@@ -52,6 +43,16 @@ public class PetstorePagina extends Pagina {
 				return pageResponse;
 			}
 		}));
+		
+		menu.adicionar(getComponenteFabrica().criarMenuItem("Meu carrinho", new AcaoAbs(this) {
+			public IResposta execute() {
+				IResposta pageResponse = getComponenteFabrica().criarResposta();
+				pageResponse.setPageUrl(CarrinhoPrinicipal.class);
+
+				return pageResponse;
+			}
+		}));
+
 
 		setMenu(menu);
 	}
