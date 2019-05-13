@@ -36,9 +36,22 @@ public class CarrinhoRepositorio {
 		return produtoResultado;
 	}
 	
+	public void remover(Produto produto) {
+		
+		Integer pos = this.produtos.indexOf(produto);
+		
+		if (pos != -1) {
+			this.produtos.remove(produto);	
+		}
+		
+	}
 
 	public List<Produto> getProdutos() {
 		return this.produtos;
+	}
+	
+	public int  getTotalProdutos() {
+		return this.produtos.size();
 	}
 	
 	

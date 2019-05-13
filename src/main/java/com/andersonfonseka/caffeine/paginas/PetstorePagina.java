@@ -1,5 +1,7 @@
 package com.andersonfonseka.caffeine.paginas;
 
+import javax.inject.Inject;
+
 import com.andersonfonseka.caffeine.IMenu;
 import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
@@ -7,8 +9,16 @@ import com.andersonfonseka.caffeine.componentes.impl.basicos.Pagina;
 import com.andersonfonseka.caffeine.paginas.categoria.CategoriaPrincipal;
 import com.andersonfonseka.caffeine.paginas.compra.CarrinhoPrinicipal;
 import com.andersonfonseka.caffeine.paginas.produto.ProdutoPrincipal;
+import com.andersonfonseka.caffeine.repositorio.CarrinhoRepositorio;
+import com.andersonfonseka.caffeine.repositorio.ProdutoRepositorio;
 
 public class PetstorePagina extends Pagina {
+	
+	@Inject
+	private ProdutoRepositorio produtoRepositorio;
+
+	@Inject
+	private CarrinhoRepositorio carrinhoRepositorio;
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +54,7 @@ public class PetstorePagina extends Pagina {
 			}
 		}));
 		
-		menu.adicionar(getComponenteFabrica().criarMenuItem("Meu carrinho", new AcaoAbs(this) {
+		menu.adicionar(getComponenteFabrica().criarMenuItem("Meu carrinho (" + carrinhoRepositorio.getTotalProdutos() + ")", new AcaoAbs(this) {
 			public IResposta execute() {
 				IResposta pageResponse = getComponenteFabrica().criarResposta();
 				pageResponse.setPageUrl(CarrinhoPrinicipal.class);
@@ -57,4 +67,12 @@ public class PetstorePagina extends Pagina {
 		setMenu(menu);
 	}
 
+	public ProdutoRepositorio getProdutoRepositorio() {
+		return produtoRepositorio;
+	}
+
+	public CarrinhoRepositorio getCarrinhoRepositorio() {
+		return carrinhoRepositorio;
+	}
+	
 }

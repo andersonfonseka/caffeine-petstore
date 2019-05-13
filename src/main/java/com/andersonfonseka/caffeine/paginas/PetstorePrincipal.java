@@ -1,7 +1,6 @@
 package com.andersonfonseka.caffeine.paginas;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.ICard;
@@ -10,18 +9,10 @@ import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.dominio.Produto;
-import com.andersonfonseka.caffeine.repositorio.CarrinhoRepositorio;
-import com.andersonfonseka.caffeine.repositorio.ProdutoRepositorio;
 
 public class PetstorePrincipal extends PetstorePagina {
 
 	private static final long serialVersionUID = 1L;
-
-	@Inject
-	ProdutoRepositorio produtoRepositorio;
-
-	@Inject
-	CarrinhoRepositorio carrinhoRepositorio;
 
 	IFormulario formulario;
 
@@ -36,7 +27,7 @@ public class PetstorePrincipal extends PetstorePagina {
 		formulario = getComponenteFabrica().criarFormulario();
 		conteiner = getComponenteFabrica().criarConteiner(1);
 
-		for (Produto prod : produtoRepositorio.getProdutos()) {
+		for (Produto prod : getProdutoRepositorio().getProdutos()) {
 
 			ICard card = getComponenteFabrica().criarCard(prod.getImagem(), prod.getDescricao(), prod.getObservacoes());
 
@@ -50,7 +41,7 @@ public class PetstorePrincipal extends PetstorePagina {
 					produto.setDescricao(cardBotao.getTitulo());
 					produto.setObservacoes(cardBotao.getTexto());
 
-					carrinhoRepositorio.adicionar(produto);
+					getCarrinhoRepositorio().adicionar(produto);
 
 					IResposta resposta = getComponenteFabrica().criarResposta();
 					resposta.setPageUrl(PetstorePrincipal.class);

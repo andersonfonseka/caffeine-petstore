@@ -68,7 +68,6 @@ public class ProdutoPrincipal extends PetstorePagina {
 			}
 		}, false);
 
-
 		conteiner.
 			adicionar(0, tabela);
 		
