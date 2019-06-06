@@ -12,6 +12,8 @@ public class Produto {
 	
 	private String imagem = "";
 	
+	private int quantidade;
+	
 	private Categoria categoria;
 	
 	public Integer getId() {
@@ -60,6 +62,14 @@ public class Produto {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
+	}
+	
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	@Override

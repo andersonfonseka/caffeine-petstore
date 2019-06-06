@@ -40,7 +40,8 @@ public class CarrinhoPrinicipal extends PetstorePagina {
 		ITabela tabela = getComponenteFabrica().criarTabela("tblCarrinho");
 
 		tabela.adicionaColuna(getComponenteFabrica().criarTabelaColuna("#", "getId", true))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"));
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Quantidade", "getQuantidade"));
 
 		tabela.setDados(carrinhoRepositorio.getProdutos());
 
