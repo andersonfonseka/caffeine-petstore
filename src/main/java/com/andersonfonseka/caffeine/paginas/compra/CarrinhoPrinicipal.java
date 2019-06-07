@@ -41,7 +41,9 @@ public class CarrinhoPrinicipal extends PetstorePagina {
 
 		tabela.adicionaColuna(getComponenteFabrica().criarTabelaColuna("#", "getId", true))
 		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Quantidade", "getQuantidade"));
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor unitario", "getValor"))
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Quantidade", "getQuantidade"))
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor calculado", "getValorCalculado"));
 
 		tabela.setDados(carrinhoRepositorio.getProdutos());
 

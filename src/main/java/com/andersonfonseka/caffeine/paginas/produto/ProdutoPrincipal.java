@@ -44,7 +44,8 @@ public class ProdutoPrincipal extends PetstorePagina {
 
 		tabela.adicionaColuna(getComponenteFabrica().criarTabelaColuna("#", "getId", true))
 		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Categoria", "getCategoria"))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"));
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
+		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor unitario", "getValor"));
 
 		tabela.setDados(produtoRepositorio.getProdutos());
 

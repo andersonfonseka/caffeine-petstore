@@ -35,6 +35,10 @@ public class Produto {
 	public double getValor() {
 		return valor;
 	}
+	
+	public double getValorCalculado() {
+		return valor * quantidade;
+	}
 
 	public void setValor(double valor) {
 		this.valor = valor;

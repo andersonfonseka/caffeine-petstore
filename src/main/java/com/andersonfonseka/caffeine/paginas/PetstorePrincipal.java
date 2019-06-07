@@ -8,6 +8,7 @@ import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IEntradaNumero;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
+import com.andersonfonseka.caffeine.IRotulo;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
 import com.andersonfonseka.caffeine.dominio.Produto;
 
@@ -34,6 +35,8 @@ public class PetstorePrincipal extends PetstorePagina {
 
 			IEntradaNumero txtQuantidade = getComponenteFabrica().criarEntradaNumero("Quantidade", true);
 			
+			IRotulo lblValor = getComponenteFabrica().criarRotulo("R$ " + prod.getValor());
+			
 			IBotao botao = getComponenteFabrica().criarBotao("Adicionar ao carrinho", new AcaoAbs(card) {
 				@Override
 				public IResposta execute() {
@@ -44,6 +47,8 @@ public class PetstorePrincipal extends PetstorePagina {
 					produto.setDescricao(cardBotao.getTitulo());
 					produto.setObservacoes(cardBotao.getTexto());
 					produto.setQuantidade(Integer.valueOf(txtQuantidade.getValor()));
+					produto.setValor(prod.getValor());
+					
 					
 					getCarrinhoRepositorio().adicionar(produto);
 
@@ -55,6 +60,7 @@ public class PetstorePrincipal extends PetstorePagina {
 			}, true);
 			
 			
+			card.adicionar(lblValor);
 			card.adicionar(txtQuantidade);
 			card.setBotao(botao);
 

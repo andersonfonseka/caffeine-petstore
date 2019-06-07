@@ -10,6 +10,7 @@ import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IEntradaAreaTexto;
 import com.andersonfonseka.caffeine.IEntradaArquivo;
+import com.andersonfonseka.caffeine.IEntradaNumero;
 import com.andersonfonseka.caffeine.IEntradaTexto;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IOpcaoSelecao;
@@ -44,6 +45,8 @@ public class ProdutoFormulario extends Pagina {
 	
 	IEntradaTexto txtDescricao;
 	
+	IEntradaNumero txtValor;
+	
 	IEntradaAreaTexto txtObservacoes;
 	
 	IEntradaArquivo imgAnimal;
@@ -56,7 +59,7 @@ public class ProdutoFormulario extends Pagina {
 
 		form = getComponenteFabrica().criarFormulario();
 
-		conteiner = getComponenteFabrica().criarConteiner(4);
+		conteiner = getComponenteFabrica().criarConteiner(5);
 		
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
 		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
@@ -90,6 +93,7 @@ public class ProdutoFormulario extends Pagina {
 				produto.setDescricao(txtDescricao.getValor());
 				produto.setObservacoes(txtObservacoes.getValor());
 				produto.setImagem(imgAnimal.getEntradaOculta().getValor());
+				produto.setValor(Double.valueOf(txtValor.getValor()));
 
 				produtoRepositorio.adicionar(produto);
 
@@ -113,14 +117,16 @@ public class ProdutoFormulario extends Pagina {
 			selCategorias.adicionar(getComponenteFabrica().criarOpcaoSelecao(categoria.getId().toString(), categoria.getDescricao()));	
 		}
 		
+		txtValor = getComponenteFabrica().criarEntradaNumero("Valor", true);
 		txtDescricao = getComponenteFabrica().criarEntradaTexto("Descricao", true);
 		txtObservacoes = getComponenteFabrica().criarEntradaAreaTexto("Observacoes", true, 5);
 		imgAnimal = getComponenteFabrica().criarEntradaArquivo("Imagem do animal", false);
 		
 		conteiner.adicionar(0, selCategorias);
 		conteiner.adicionar(1, txtDescricao);
-		conteiner.adicionar(2, txtObservacoes);
-		conteiner.adicionar(3, imgAnimal);
+		conteiner.adicionar(2, txtValor);
+		conteiner.adicionar(3, txtObservacoes);
+		conteiner.adicionar(4, imgAnimal);
 
 	}
 	
