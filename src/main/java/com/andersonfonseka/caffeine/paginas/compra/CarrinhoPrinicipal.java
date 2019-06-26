@@ -12,7 +12,7 @@ import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.ITabela;
 import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
-import com.andersonfonseka.caffeine.dominio.Produto;
+import com.andersonfonseka.caffeine.dominio.ItemProduto;
 import com.andersonfonseka.caffeine.paginas.PetstorePagina;
 import com.andersonfonseka.caffeine.paginas.produto.ProdutoFormulario;
 import com.andersonfonseka.caffeine.repositorio.CarrinhoRepositorio;
@@ -40,10 +40,10 @@ public class CarrinhoPrinicipal extends PetstorePagina {
 		ITabela tabela = getComponenteFabrica().criarTabela("tblCarrinho");
 
 		tabela.adicionaColuna(getComponenteFabrica().criarTabelaColuna("#", "getId", true))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor unitario", "getValor"))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Quantidade", "getQuantidade"))
-		.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor calculado", "getValorCalculado"));
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor unitario", "getValor"))
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Quantidade", "getQuantidade"))
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Valor calculado", "getValorCalculado"));
 
 		tabela.setDados(carrinhoRepositorio.getProdutos());
 
@@ -89,7 +89,7 @@ public class CarrinhoPrinicipal extends PetstorePagina {
 		super.aoCarregar(parametros);
 		
 		if (parametros.containsKey("tblCarrinho")) {
-			Produto produto = new Produto();
+			ItemProduto produto = new ItemProduto();
 			produto.setId(Integer.valueOf(parametros.get("tblCarrinho").toString()));
 			carrinhoRepositorio.remover(produto);
 		}

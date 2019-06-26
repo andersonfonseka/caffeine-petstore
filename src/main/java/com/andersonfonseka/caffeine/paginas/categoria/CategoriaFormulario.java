@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.IConteiner;
+import com.andersonfonseka.caffeine.IEntradaEditorTexto;
 import com.andersonfonseka.caffeine.IEntradaTexto;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
@@ -32,6 +33,8 @@ public class CategoriaFormulario extends Pagina {
 	IConteiner conteinerBotoes;
 	
 	IEntradaTexto txtDescricao;
+	
+	IEntradaEditorTexto txtObservacoes;
 
 	@PostConstruct
 	public void post() {
@@ -41,7 +44,7 @@ public class CategoriaFormulario extends Pagina {
 
 		form = getComponenteFabrica().criarFormulario();
 
-		conteiner = getComponenteFabrica().criarConteiner(3);
+		conteiner = getComponenteFabrica().criarConteiner(4);
 
 		conteinerBotoes = getComponenteFabrica().criarConteiner(1);
 		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
@@ -65,6 +68,7 @@ public class CategoriaFormulario extends Pagina {
 
 				Categoria categoria = new Categoria();
 				categoria.setDescricao(txtDescricao.getValor());
+				categoria.setObservacoes(txtObservacoes.getValor());
 
 				categoriaRepositorio.adicionar(categoria);
 
@@ -82,7 +86,11 @@ public class CategoriaFormulario extends Pagina {
 	
 	private void criarComponentesBasicos() {
 		txtDescricao = getComponenteFabrica().criarEntradaTexto("Descricao", true);
+		
+		txtObservacoes = getComponenteFabrica().criarEntradaEditorTexto("Observacoes", false, 40);
+		
 		conteiner.adicionar(0, txtDescricao);
+		conteiner.adicionar(1, txtObservacoes);
 	}
 	
 

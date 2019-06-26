@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.inject.Singleton;
 
+import com.andersonfonseka.caffeine.dominio.ItemProduto;
 import com.andersonfonseka.caffeine.dominio.Produto;
 
 @Singleton
@@ -13,21 +14,21 @@ public class CarrinhoRepositorio {
 	
 	private static int contador = 1;
 	
-	private List<Produto> produtos = new ArrayList<Produto>();
+	private List<ItemProduto> produtos = new ArrayList<ItemProduto>();
 	
 	public CarrinhoRepositorio() {}{}
 	
-	public void adicionar(Produto produto) {
+	public void adicionar(ItemProduto produto) {
 		produto.setId(contador);
 		this.produtos.add(produto);
 		contador++;
 	}
 	
-	public Produto obterProduto(String id) {
+	public ItemProduto obterProduto(String id) {
 		
-		Produto produtoResultado = null;
+		ItemProduto produtoResultado = null;
 		
-		Optional<Produto> produtoBusca = produtos.stream().filter(x -> x.getId().equals(Integer.valueOf(id))).findFirst();
+		Optional<ItemProduto> produtoBusca = produtos.stream().filter(x -> x.getId().equals(Integer.valueOf(id))).findFirst();
 		
 		if (produtoBusca.isPresent()) {
 			produtoResultado = produtoBusca.get();
@@ -36,7 +37,7 @@ public class CarrinhoRepositorio {
 		return produtoResultado;
 	}
 	
-	public void remover(Produto produto) {
+	public void remover(ItemProduto produto) {
 		
 		Integer pos = this.produtos.indexOf(produto);
 		
@@ -46,7 +47,7 @@ public class CarrinhoRepositorio {
 		
 	}
 
-	public List<Produto> getProdutos() {
+	public List<ItemProduto> getProdutos() {
 		return this.produtos;
 	}
 	

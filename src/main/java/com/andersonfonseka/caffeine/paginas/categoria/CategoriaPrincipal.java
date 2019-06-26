@@ -13,7 +13,10 @@ import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.ITabela;
 import com.andersonfonseka.caffeine.componentes.ConteinerEnum;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
+import com.andersonfonseka.caffeine.dominio.Categoria;
+import com.andersonfonseka.caffeine.dominio.Produto;
 import com.andersonfonseka.caffeine.paginas.PetstorePagina;
+import com.andersonfonseka.caffeine.paginas.compra.CarrinhoPrinicipal;
 import com.andersonfonseka.caffeine.repositorio.CategoriaRepositorio;
 
 @RequestScoped
@@ -43,7 +46,8 @@ public class CategoriaPrincipal extends PetstorePagina {
 		ITabela tabela = getComponenteFabrica().criarTabela("tblCategorias");
 
 		tabela.adicionaColuna(getComponenteFabrica().criarTabelaColuna("#", "getId", true))
-				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"));
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Descricao", "getDescricao"))
+				.adicionaColuna(getComponenteFabrica().criarTabelaColuna("Observacoes", "getObservacoes"));
 
 		tabela.setDados(categoriaRepositorio.getCategorias());
 
@@ -66,6 +70,16 @@ public class CategoriaPrincipal extends PetstorePagina {
 				return pageResponse;
 			}
 		}, false);
+		
+		IBotao btnRemover = getComponenteFabrica().criarBotao("Remover", new AcaoAbs(form) {
+			public IResposta execute() {
+				
+				IResposta pageResponse = getComponenteFabrica().criarResposta();
+				pageResponse.setPageUrl(CategoriaPrincipal.class);
+
+				return pageResponse;
+			}
+		}, false);
 
 
 		conteiner.
@@ -75,7 +89,8 @@ public class CategoriaPrincipal extends PetstorePagina {
 		conteinerBotoes.setOrientacao(ConteinerEnum.HORIZONTAL);
 		
 		conteinerBotoes.adicionar(0, btnNovo).
-						adicionar(0, btnEditar);
+						adicionar(0, btnEditar).
+						adicionar(0, btnRemover);
 		
 		form.adicionar(conteiner);
 		form.adicionar(conteinerBotoes);
@@ -87,6 +102,12 @@ public class CategoriaPrincipal extends PetstorePagina {
 	@Override
 	public void aoCarregar(Map<String, Object> parametros) {
 		super.aoCarregar(parametros);
+		
+		if (parametros.containsKey("tblCategorias")) {
+			Categoria categoria = new Categoria();
+			categoria.setId(Integer.valueOf(parametros.get("tblCategorias").toString()));
+			categoriaRepositorio.remover(categoria);
+		}
 	}
 
 }

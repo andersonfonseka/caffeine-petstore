@@ -1,13 +1,25 @@
 package com.andersonfonseka.caffeine.dominio;
 
-public class Categoria {
+public class ItemProduto {
 	
 	private Integer id;
 	
-	private String descricao;
+	private Produto produto;
 	
-	private String observacoes;
-	
+	public String getDescricao() {
+		return produto.getDescricao();
+	}
+
+	public double getValor() {
+		return produto.getValor();
+	}
+
+	public String getCategoria() {
+		return produto.getCategoria();
+	}
+
+	private int quantidade;
+
 	public Integer getId() {
 		return id;
 	}
@@ -16,25 +28,24 @@ public class Categoria {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
-	@Override
-	public String toString() {
-		return this.descricao;
-	}
-	
-	public String getObservacoes() {
-		return observacoes;
+	public int getQuantidade() {
+		return quantidade;
 	}
 
-	public void setObservacoes(String observacoes) {
-		this.observacoes = observacoes;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getValorCalculado() {
+		return produto.getValor() * quantidade;
 	}
 
 	@Override
@@ -53,7 +64,7 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		ItemProduto other = (ItemProduto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

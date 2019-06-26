@@ -1,20 +1,27 @@
 package com.andersonfonseka.caffeine.paginas;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.ICard;
 import com.andersonfonseka.caffeine.IConteiner;
 import com.andersonfonseka.caffeine.IEntradaNumero;
+import com.andersonfonseka.caffeine.IEntradaOculta;
 import com.andersonfonseka.caffeine.IFormulario;
 import com.andersonfonseka.caffeine.IResposta;
 import com.andersonfonseka.caffeine.IRotulo;
 import com.andersonfonseka.caffeine.componentes.acao.AcaoAbs;
+import com.andersonfonseka.caffeine.dominio.ItemProduto;
 import com.andersonfonseka.caffeine.dominio.Produto;
+import com.andersonfonseka.caffeine.repositorio.ProdutoRepositorio;
 
 public class PetstorePrincipal extends PetstorePagina {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private ProdutoRepositorio produtoRepositorio;
 
 	IFormulario formulario;
 
@@ -22,6 +29,7 @@ public class PetstorePrincipal extends PetstorePagina {
 
 	@PostConstruct
 	public void post() {
+		
 		super.post();
 
 		setTitulo("Principal");
@@ -32,6 +40,8 @@ public class PetstorePrincipal extends PetstorePagina {
 		for (Produto prod : getProdutoRepositorio().getProdutos()) {
 
 			ICard card = getComponenteFabrica().criarCard(prod.getImagem(), prod.getDescricao(), prod.getObservacoes());
+			
+			IEntradaOculta txProdutoId = getComponenteFabrica().criarEntradaOculta(prod.getId().toString());
 
 			IEntradaNumero txtQuantidade = getComponenteFabrica().criarEntradaNumero("Quantidade", true);
 			
@@ -42,15 +52,14 @@ public class PetstorePrincipal extends PetstorePagina {
 				public IResposta execute() {
 
 					ICard cardBotao = (ICard) getSource();
-
-					Produto produto = new Produto();
-					produto.setDescricao(cardBotao.getTitulo());
-					produto.setObservacoes(cardBotao.getTexto());
-					produto.setQuantidade(Integer.valueOf(txtQuantidade.getValor()));
-					produto.setValor(prod.getValor());
 					
+					Produto produto = produtoRepositorio.obterProduto(txProdutoId.getValor());
 					
-					getCarrinhoRepositorio().adicionar(produto);
+					ItemProduto itemProduto = new ItemProduto();
+					itemProduto.setProduto(produto);
+					itemProduto.setQuantidade(Integer.valueOf(txtQuantidade.getValor()));
+					
+					getCarrinhoRepositorio().adicionar(itemProduto);
 
 					IResposta resposta = getComponenteFabrica().criarResposta();
 					resposta.setPageUrl(PetstorePrincipal.class);
@@ -60,6 +69,7 @@ public class PetstorePrincipal extends PetstorePagina {
 			}, true);
 			
 			
+			card.adicionar(txProdutoId);
 			card.adicionar(lblValor);
 			card.adicionar(txtQuantidade);
 			card.setBotao(botao);

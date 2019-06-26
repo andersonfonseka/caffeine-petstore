@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import com.andersonfonseka.caffeine.IBotao;
 import com.andersonfonseka.caffeine.IConteiner;
-import com.andersonfonseka.caffeine.IEntradaAreaTexto;
 import com.andersonfonseka.caffeine.IEntradaArquivo;
+import com.andersonfonseka.caffeine.IEntradaEditorTexto;
 import com.andersonfonseka.caffeine.IEntradaNumero;
 import com.andersonfonseka.caffeine.IEntradaTexto;
 import com.andersonfonseka.caffeine.IFormulario;
@@ -47,7 +47,7 @@ public class ProdutoFormulario extends Pagina {
 	
 	IEntradaNumero txtValor;
 	
-	IEntradaAreaTexto txtObservacoes;
+	IEntradaEditorTexto txtObservacoes;
 	
 	IEntradaArquivo imgAnimal;
 
@@ -119,7 +119,7 @@ public class ProdutoFormulario extends Pagina {
 		
 		txtValor = getComponenteFabrica().criarEntradaNumero("Valor", true);
 		txtDescricao = getComponenteFabrica().criarEntradaTexto("Descricao", true);
-		txtObservacoes = getComponenteFabrica().criarEntradaAreaTexto("Observacoes", true, 5);
+		txtObservacoes = getComponenteFabrica().criarEntradaEditorTexto("Observacoes", true, 40);
 		imgAnimal = getComponenteFabrica().criarEntradaArquivo("Imagem do animal", false);
 		
 		conteiner.adicionar(0, selCategorias);
